@@ -2,61 +2,90 @@ package PacServer;
 
 import java.util.Random;
 import org.json.simple.*;
+import java.util.ArrayList;
 
 public class Collector {
-    
+     
     Random rand = new Random();
     static JSONObject obj = new JSONObject();
-    //Collection<JSONObject> items = new ArrayList<JSONObject>();
+    ArrayList<Dots> dot_list=new ArrayList<Dots>();
+    ArrayList<Players> player_list=new ArrayList<Players>();
     
-    Dots newDot1,newDot2,newDot3,newDot4,newDot5,newDot6,newDot7,newDot8,newDot9,newDot10,newDot11,newDot12;
-   
-    Players player1,player2,player3,player4;
     
-     Collector(){ 
+    Collector(){ 
         
-    newDot1 = new Dots("R",rand.nextInt(44),rand.nextInt(44));
-    newDot2 = new Dots("G",rand.nextInt(44),rand.nextInt(44));
-    newDot3 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot4 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot5 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot6 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot7 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot8 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot9 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot10 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot11 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-    newDot12 = new Dots("B",rand.nextInt(44),rand.nextInt(44));
-   
-    player1 = new Players("P1",5,0,0);
-    player2 = new Players("P2",6,0,44);
-    player3 = new Players("P3",2,44,0);
-    player4 = new Players("P4",8,44,44);
+        for (int i = 0; i < 12; i++) {
+            dot_list.add(new Dots(Color(), rand.nextInt(44), rand.nextInt(44)));
+        }
+        
+        for (int i = 1; i <= 4; i++) {
+            player_list.add(new Players(player(i), i, rand.nextInt(44), rand.nextInt(44)));
+            
+        }
+
     }
+    
+    public String Color(){
+        int color = rand.nextInt(2);
+        if (color == 0) {
+            return "R";
+        }else if (color == 1) {
+            return "G";
+        }else
+            return "B";   
+    }
+    public String player(int i){
+        if (i==1) {
+            return "P1";
+        }else if (i==2) {
+            return "P2";
+        }else if (i==3) {
+            return "P3";
+        }else
+            return "P4";
+    }
+    
     
     public void DotFormat(){
         
-        JSONArray array1 = new JSONArray();
-//      JSONArray array2 = new JSONArray();
+        ArrayList<JSONArray> array_list=new ArrayList<JSONArray>();
+        JSONArray main_array = new JSONArray();
         
-        array1.add(newDot1);
-        
-        obj.put("DOTS", array1);
-//      obj.put("PLAYERS", array2);
-        
+        for (int i = 0; i < 12; i++) {
+            array_list.add(new JSONArray());
+            array_list.get(i).add(dot_list.get(i).color);
+            array_list.get(i).add(dot_list.get(i).x);
+            array_list.get(i).add(dot_list.get(i).y);
+            main_array.add(array_list.get(i));
+        }
+      
+        obj.put("DOTS", main_array);
         System.out.print(obj.toString());
+     
     }
     
     public void PlayerFormat(){
-        obj.put("PLAYERS", new JSONArray());
+        
+        ArrayList<JSONArray> array_list=new ArrayList<JSONArray>();
+        JSONArray main_array = new JSONArray();
+        
+        for (int i = 0; i < 4; i++) {
+            array_list.add(new JSONArray());
+            array_list.get(i).add(player_list.get(i).player);
+            array_list.get(i).add(player_list.get(i).score);
+            array_list.get(i).add(player_list.get(i).x);
+            array_list.get(i).add(player_list.get(i).y);
+            main_array.add(array_list.get(i));
+        }
+     
+        obj.put("PLAYERS", main_array);
+        
     }
 
     public static void main(String argc[]){
         
-        Collector c = new Collector();
-        c.DotFormat();
+        Collector collector = new Collector();
+        collector.DotFormat();
+        collector.PlayerFormat();
     }
 }
-
-
-
