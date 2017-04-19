@@ -1,10 +1,11 @@
 
 var response;
- const source = new EventSource('stream');
+source = new EventSource('stream');
     source.onmessage = function (e) {
-     response = JSON.parse(e.data);
+     response = JSON.stringify(e.data);
     };
-
+    
+    document.write(response);
 /*Canvas stuff*/
 var canvas = $("#canvas");
 var ctx = canvas[0].getContext("2d");
@@ -20,7 +21,7 @@ ctx.fillRect(0, 0, w, h);
 ctx.strokeStyle = "black";
 ctx.strokeRect(0, 0, w, h);
 
-
+    document.write(cw);
 function init() {
 	
 	/* Trigger the paint function every 100ms to update the canvas*/
@@ -28,7 +29,7 @@ function init() {
 	game_loop = setInterval(paint, 100);
 	
 }
-
+document.write(cw);
 init();
 
 /*Lets paint the player now*/
@@ -59,7 +60,7 @@ function paint() {
 	
 
 }
-
+document.write(cw);
 paint();
 
 /*Function to paint players*/
@@ -133,18 +134,6 @@ $(document).keydown(function (e) {
 });         
                
 // TODO Send Keystroke to server
-
-var Keystroke = {
-
-	"up" : "UP",
-	"down" : "DOWN",
-	"left" : "LEFT",
-	"right" : "RIGHT" 
-
-};
-
-var myJSON = JSON.stringify(Keystroke);
-
 			   
 function sendPlayerPosition(){    
 	if(true){
@@ -157,6 +146,7 @@ function sendPlayerPosition(){
 		return;
 	} 
 }
+    
         
   
 //XMLHttpRequest is normally used for fetch AJAX format data.But 
@@ -171,3 +161,4 @@ function sendPlayerPosition(){
 
 
 // <script> document.write("OK") </script> is the print statement in JS
+   
