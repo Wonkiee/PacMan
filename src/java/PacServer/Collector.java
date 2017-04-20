@@ -52,23 +52,27 @@ public class Collector {
     }
 
      private String Color(){
-        int color = rand.nextInt(2);
-        if (color == 0) {
-            return "R";
-        }else if (color == 1) {
-            return "G";
-        }else
-            return "B";   
+        int color = rand.nextInt(3);
+        switch (color) {
+            case 0:
+                return "R";
+            case 1:
+                return "G";
+            default:   
+                return "B";
+        }
     }
     private String player(int i){
-        if (i==1) {
-            return "P1";
-        }else if (i==2) {
-            return "P2";
-        }else if (i==3) {
-            return "P3";
-        }else
-            return "P4";
+        switch (i) {
+            case 1:
+                return "P1";
+            case 2:
+                return "P2";
+            case 3:
+                return "P3";
+            default:
+                return "P4";
+        }
     }
 //    public static void main(String argc[]){
 //        

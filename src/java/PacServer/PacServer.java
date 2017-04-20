@@ -23,16 +23,17 @@ public class PacServer extends HttpServlet {
             response.setContentType("text/event-stream");
             response.flushBuffer();
         
-            try(PrintWriter out = response.getWriter()){
-                out.print("data:");
-//                out.print(collector.DotFormat());
-                out.print(collector.objectSender());
+               try(PrintWriter out = response.getWriter()){
+                out.print("data: ");
+                out.println(collector.objectSender());
                 out.println();
                 out.flush();
             
         }catch (Exception e) {
             throw new ServletException(e);
         }
+        
+         
     }
 
     @Override
